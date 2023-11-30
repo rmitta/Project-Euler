@@ -1,8 +1,10 @@
 #Even Fibonacci Numbers
 #By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 
-#Could do this via 1 1, 1 0 matrix multiplication. Cute. 
-#Just keep a running sum, while loop for exceeding 4M.
+#We define a fibonnaci matrix that functions to generate the next two fibonnaci numbers when an array of the previous two numbers is multiplied into it.
+#Then we simply run through the fibonnaci numbers, checking to see if they are even, and adding those to the sum until we are at 4 million.
+
+#Note: Actually every third fibonnaci number is even. We could have used this which may have made the algorithm ever so slighly faster.
 
 import numpy as np
 
