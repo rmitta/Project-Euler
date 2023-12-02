@@ -10,13 +10,14 @@
 import numpy as np
 
 def primesUpTo(n):
-    primes = []
-    potentialPrimes = list(range(2,n+1))
-    while len(potentialPrimes) > 0 :
-        p = potentialPrimes.pop(0)
-        primes.append(p)
-        potentialPrimes = [x for x in potentialPrimes if (x % p != 0)]
-    return primes
+    primesList = []
+    primes = np.ones(n+1, dtype=np.bool_)
+    for p in range(2,n+1):
+        if primes[p]:
+            primesList.append(p)
+            for m in range(p,n+1,p):
+                primes[m] = False
+    return primesList
 
 def greatestPowerLessEqual(p,n):
     i = 0
@@ -29,4 +30,4 @@ def primePowersUnder(n):
     return list(map(lambda p : greatestPowerLessEqual(p,n), primes))
 
 print("What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?")
-print("Answer: {}".format(np.prod(primePowersUnder(20))))    
+print("Answer: {}".format(np.prod(primePowersUnder(20))))
