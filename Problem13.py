@@ -1,5 +1,7 @@
 #Large Sum
 #Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+#This question is super easy if you use a dataType that is designed for large integers. We choose to do without this.
+import numpy as np
 
 numbers = """
 37107287533902102798797998220837590246510135740250
@@ -103,3 +105,40 @@ numbers = """
 20849603980134001723930671666823555245252804609722
 53503534226472524250874054075591789781264330331690"""
 
+numberList = numbers.split()
+
+#The question is what dtype do we use for dealing with large integers? Or do we define our own dtype for integer addition base 10?
+
+class unboundedPosIntBase10():
+    def __init__(self,intStr : str) -> None:
+        self.list = [int(s) for s in reversed(intStr)]
+    
+    def add(self,num):
+        sum = unboundedPosIntBase10("")
+        list1 = self.list
+        list2 = num.list
+        len1 = len(list1)
+        len2 = len(list2)
+        for _ in range(len1-len2):
+            list2.append(0)
+        for _ in range(len2-len1):
+            list1.append(0)
+        carry = 0
+        for i in range(len(list1)):
+            digSum = list1[i] + list2[i] + carry
+            if digSum > 9:
+                digSum -= 10
+                carry = 1
+            else:
+                carry = 0
+            sum.list.append(digSum)
+        if carry == 1:
+            sum.list.append(carry)
+        return sum
+
+sum = unboundedPosIntBase10("")
+for num in numberList:
+    sum = sum.add(unboundedPosIntBase10(num))
+
+print(sum.list[-1:-11:-1])
+#Question: how can you typehint that a function should be used on an element of the class being defined?
