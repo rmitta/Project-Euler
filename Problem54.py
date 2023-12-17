@@ -1,3 +1,6 @@
+#Poker Hands
+#How many of the following poker hands does player 1 win?
+
 with open("Problem54_hands.txt") as file:
     lines = [line.rstrip() for line in file]
 
@@ -40,49 +43,79 @@ class pokerCard():
 class pokerHand():
     def __init__(self, cards : list) -> None:
         """Store as an ordered list of pokerCards, ordered by number."""
-        self.cards = [pokerCard(card) for card in cards].sort()
+        self.cards = sorted([pokerCard(card) for card in cards])
 
-    def bestHand(self) -> None:
+    def bestHand(self) -> (str,list,list):
         """Calculate the best poker hand and store the result"""
+        #Check for flush (have to repeat later)
         if all((self.cards[0].suit == self.cards[i].suit for i in range(1,5))):
-            if 
-        self.hand = ""
-        self.handCards = [].sort()
-        self.otherCards = [].sort()
-
+            #Check for straight flush
+            if all((self.cards[0].num + i == self.cards[i].num for i in range(1,5))):
+                #Check for royal flush
+                if self.cards[4].num == 14:
+                    return ("Royal Flush", self.cards, [])
+            return ("Straight Flush", self.cards, [])
+        #Check for 4 of a kind
+        for i in range(2): #Only need to check twice because only 1 can be outside the 4kind
+            sameCards = [self.cards[j] for j in range(5) if self.cards[j].num == self.cards[i].num]
+            if len(sameCards) == 4:
+                return ("Four of a Kind", sameCards, [self.cards[i] for i in range(5) if self.cards[i].num != sameCards[0].num])
+        #Check for 3 of a kind
+        for i in range(3): #Only need to check thrice because only 2 can be outside the 3kind
+            sameCards = [self.cards[j] for j in range(5) if self.cards[j].num == self.cards[i].num]
+            if len(sameCards) == 3:
+                #Check for full house
+                otherCards = list(set(self.cards) - set(sameCards))
+                if otherCards[0].num == otherCards[1].num:
+                    return ("Full House", sameCards, otherCards)
+        #Check for flush
+        if all((self.cards[0].suit == self.cards[i].suit for i in range(1,5))):
+            return ("Flush", self.cards, [])
+        #Check for straight
+        if all((self.cards[0].num + i == self.cards[i].num for i in range(1,5))):
+            return("Straight", self.cards, [])
+        #Check for 3 of a kind
+        for i in range(3): #Only need to check thrice because only 2 can be outside the 3kind
+            sameCards = [self.cards[j] for j in range(5) if self.cards[j].num == self.cards[i].num]
+            if len(sameCards) == 3:
+                return ("Three of a Kind",sameCards,list(set(self.cards) - set(sameCards)))
+        #Check for two pair
+        for i in range(2): #Only need to check twice because only 1 can be outside the two pair
+            sameCards = [self.cards[j] for j in range(5) if self.cards[j].num == self.cards[i].num]
+            if len(sameCards) == 2:
+                otherCards = list(set(self.cards) - set(sameCards))
+                for k in range(2): #Only need to check twice because only 1 can be outside the pair
+                    secondPair = [otherCards[j] for j in range(3) if otherCards[j].num == otherCards[k].num]
+                    if len(secondPair) == 2:
+                        return ("Two Pairs", cardsInHand := sameCards + secondPair, list(set(self.cards) - set(cardsInHand)))
+        #Check for one pair
+        for i in range(4):
+            sameCards = [self.cards[j] for j in range(5) if self.cards[j].num == self.cards[i].num]
+            if len(sameCards) == 2:
+                return("One Pair", sameCards, list(set(self.cards) - set(sameCards)))
+        #Else return high cards
+        return("High Card", self.cards,[])
 
     def __lt__(self, other) -> bool:
         """Compare two hands. Note that this changes the cards stored in handCards and otherCards"""
-        if (h1 := handOrder[self.hand]) < (h2 := handOrder[other.hand]):
+        h1name, cards1, ocards1 = self.bestHand()
+        h2name, cards2, ocards2 = other.bestHand()
+        if (h1 := handOrder[h1name]) < (h2 := handOrder[h2name]):
             return True
         if h1 > h2:
             return False
-        if self.hand == "Full House":
-            if (c1 := self.triple[0]) < (c2 := other.triple[0]):
+        while cards1:
+            if (c1 := cards1.pop()) < (c2 := cards2.pop()):
                 return True
             if c1 > c2:
                 return False
-            if (c1 := self.double[0]) < (c2 := other.double[0]):
-                return True
-            if c1 > c2:
-                return False
-        while self.handCards:
-            if c1 := self.handCards.pop() < (c2 := other.handCards.pop()):
-                return True
-            if c1 > c2:
-                return False
-        while self.otherCards:
-            if c1 := self.otherCards.pop() < (c2 := other.otherCards.pop()):
+        while ocards1:
+            if (c1 := ocards1.pop()) < (c2 := ocards2.pop()):
                 return True
             if c1 > c2:
                 return False
         return False
         
-
-#Logic: sequentially check for each poker hand type to get self.hand
-#For <, when two hands have the same type, we have to check the highest card in each rank (and for full house the 3), then each hand 
-
-
 hand1Wins = 0
 for line in lines:
     cards = line.split()
@@ -91,4 +124,3 @@ for line in lines:
     if pokerHand(hand2) < (pokerHand(hand1)):
         hand1Wins += 1
 print(hand1Wins)
-
