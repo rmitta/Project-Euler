@@ -16,7 +16,7 @@ digits = {1 : "One"
 tens =  {1 : "Ten"
         ,2 : "Twenty"
         ,3 : "Thirty"
-        ,4 : "Fourty"
+        ,4 : "Forty"
         ,5 : "Fifty"
         ,6 : "Sixty"
         ,7 : "Seventy"
@@ -77,6 +77,7 @@ def numberGenerator(n):
 
 total = 0
 for i in numberGenerator(1000):
+    print(str(i))
     total += len(str(i).replace(" ",""))
 
 print(f"The number of characters needed to spell out all numbers 1 to 1000 is {total}")
