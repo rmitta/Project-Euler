@@ -1,3 +1,6 @@
+import Utils.Decorators
+from math import sqrt
+
 def _removeMultiplesOf(p,list):
     return [x for x in list if (x % p != 0)]
 
@@ -7,7 +10,6 @@ class Primes():
         self.list = []
         self.checked = 1
     
-    #This is currently very slow since it checks chunks for primes that are greater than sqrt(chunkmax)
     def extend(self, n, chunkSize = 1000):
         """Extend the primeslist by n new primes. Searches chunks of chunkSize integers at a time."""
         potentialPrimes = []
@@ -17,14 +19,16 @@ class Primes():
             if not potentialPrimes:
                 potentialPrimes = list(range(self.checked+1,self.checked + chunkSize + 1))
                 self.checked += chunkSize
-                #Remove multiples of already checked primes
+                #Remove multiples of already checked primes (less than sqrt max to check)
+                sqrtMaxToCheck = sqrt(potentialPrimes[-1])
                 for p in self.list:
-                    potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
+                    if p <= sqrtMaxToCheck:
+                        potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
 
             #Main step: take next prime, add it to list, remove multiples.
             p = potentialPrimes.pop(0)
             self.list.append(p)
-            potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
+            if p <= sqrtMaxToCheck:
+                potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
             
         self.checked = self.list[-1] #Because the while loop cuts off halfway through a chunk.
-    
