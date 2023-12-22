@@ -3,7 +3,7 @@
 #In the first one-thousand expansions (of sqrt(2) as an infinite continued fraction), 
 # how many fractions contain a numerator with more digits than the denominator?
 
-import Utils
+import Utils.Decorators as Decorators
 
 class Fraction():
     def __init__(self, num, den):
@@ -21,7 +21,7 @@ class Fraction():
     def __repr__(self) -> str:
         return f"{self.num} / {self.den}"
 
-@Utils.memoise
+@Decorators.memoise
 def root2frac(n):
     if n == 0:
         return Fraction(3,2)

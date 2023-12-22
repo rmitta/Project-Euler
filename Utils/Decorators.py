@@ -1,4 +1,4 @@
-#The Utilities Module for my Project Euler Files
+#The Decorators Module for my Project Euler Files
 
 import time
 def timed(function):
