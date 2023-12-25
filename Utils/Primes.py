@@ -1,4 +1,3 @@
-import Utils.Decorators
 from math import sqrt
 
 def _removeMultiplesOf(p,list):
