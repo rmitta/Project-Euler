@@ -34,7 +34,8 @@ class Primes():
                 potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
             
         self.checked = self.list[-1] #Because the while loop cuts off halfway through a chunk.
-
+    
+#    @profile
     def upto(self, n):
         """Initialize primeslist to be all primes upto n"""
         potentialPrimes = np.ones(n+1,dtype = np.bool_)
@@ -43,8 +44,5 @@ class Primes():
             if potentialPrimes[i]:
                 potentialPrimes[np.arange(i*2,n+1,i)] = np.False_
         
-        self.list = [p for p in range(2,n+1) if potentialPrimes[p]]
+        self.list = np.nonzero(potentialPrimes)
         self.checked = n
-
-
-
