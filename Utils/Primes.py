@@ -1,4 +1,5 @@
 from math import sqrt
+from collections import deque
 
 def _removeMultiplesOf(p,list):
     return [x for x in list if (x % p != 0)]
@@ -16,7 +17,7 @@ class Primes():
         while len(self.list) < prevLen + n:
             #When necessary extend the range of our search
             if not potentialPrimes:
-                potentialPrimes = list(range(self.checked+1,self.checked + chunkSize + 1))
+                potentialPrimes = deque(range(self.checked+1,self.checked + chunkSize + 1))
                 self.checked += chunkSize
                 #Remove multiples of already checked primes (less than sqrt max to check)
                 sqrtMaxToCheck = sqrt(potentialPrimes[-1])
@@ -25,7 +26,7 @@ class Primes():
                         potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
 
             #Main step: take next prime, add it to list, remove multiples.
-            p = potentialPrimes.pop(0)
+            p = potentialPrimes.popleft()
             self.list.append(p)
             if p <= sqrtMaxToCheck:
                 potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
