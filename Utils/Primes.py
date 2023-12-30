@@ -47,17 +47,4 @@ class Primes():
         self.checked = n
 
 
-import time
-
-t1 = time.time()
-
-a = Primes()
-#a.extend(1000000)
-#upto 15485863
-a.upto(15485863)
-# 0.8 seconds
-#24 seconds
-t2 = time.time()
-print(t2-t1)
-
 
