@@ -44,5 +44,5 @@ class Primes():
             if potentialPrimes[i]:
                 potentialPrimes[np.arange(i*2,n+1,i)] = np.False_
         
-        self.list = np.nonzero(potentialPrimes)
+        self.list = np.nonzero(potentialPrimes)[0]
         self.checked = n
