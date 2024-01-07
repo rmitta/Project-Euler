@@ -3,6 +3,7 @@
 #See Project Euler for question 
 
 import itertools
+from typing import Generator
 
 """
 First thoughts:
@@ -40,7 +41,7 @@ def octo(n):
     return n*(3*n-2)
 
 
-def get4digits(func) -> None:
+def get4digits(func) -> Generator[int, None, None]:
     """
     Generates the 4-digit outputs of func, assuming it is an increasing function.
 

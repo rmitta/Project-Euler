@@ -17,10 +17,10 @@ with open(filename, 'r') as f:
 triangle = get_triangle(data)
 
 class Triangle():
-    def __init__(self, rowlists):
+    def __init__(self, rowlists : list[list[int]]):
         self._length = len(rowlists)
         self.rows = rowlists
-        self.maxs = [[None for _ in row] for row in rowlists]
+        self.maxs = [[0 for _ in row] for row in rowlists]
     
     def findMaxs(self):
         self.maxs[self._length-1] = self.rows[self._length-1]

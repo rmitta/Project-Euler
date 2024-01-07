@@ -1,4 +1,4 @@
 import numpy as np
+import math
 
-np.sum([int(d) for d in str(np.math.factorial(100))])
-
+np.sum([int(d) for d in str(math.factorial(100))])

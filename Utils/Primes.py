@@ -8,7 +8,7 @@ def _removeMultiplesOf(prime : int, lst : list[int]):
 class Primes():
     """Stores lists of primes."""
     def __init__(self) -> None:
-        self.list = []
+        self.list : list[int] = []
         self.checked = 1
 
 #    @profile
@@ -30,7 +30,7 @@ class Primes():
             #Main step: take next prime, add it to list, remove multiples.
             p = potentialPrimes.pop()
             self.list.append(p)
-            if p <= sqrtMaxToCheck:
+            if p <= sqrtMaxToCheck: # type: ignore
                 potentialPrimes = _removeMultiplesOf(p,potentialPrimes)
             
         self.checked = self.list[-1] #Because the while loop cuts off halfway through a chunk.
@@ -44,5 +44,5 @@ class Primes():
             if potentialPrimes[i]:
                 potentialPrimes[np.arange(i*2,n+1,i)] = np.False_
         
-        self.list = np.nonzero(potentialPrimes)[0]
+        self.list = list(np.nonzero(potentialPrimes)[0])
         self.checked = n

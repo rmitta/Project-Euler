@@ -34,7 +34,7 @@ def main():
                 greatest_cycle = cycle_len
                 best_frac = result
     
-    print(cycle_len, best_d, best_frac)
+    print(greatest_cycle, best_d, best_frac)
 
 
 if __name__ == "__main__":

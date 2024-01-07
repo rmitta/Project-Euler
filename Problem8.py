@@ -26,13 +26,13 @@ nString = nString.replace(" ", "").replace("\n", "")
 
 import numpy as np
 
-digitList = [int(i) for i in nString]
+digitList : list[int] = [int(i) for i in nString]
 
 prod = 0
 length = len(digitList)
 
 for i in range(1000-12):
-    nextProd = np.prod(digitList[i:i+13], dtype=np.int64)
+    nextProd = np.prod(digitList[i:i+13], dtype=np.int64) # type: ignore
     prod = max(prod,nextProd)
 
 print(prod)

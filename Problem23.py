@@ -24,7 +24,7 @@ def d(n):
     return sum(proper_divisors(n))
 
 def abundant_numbers(upto):
-    [i for i in range(1,upto+1) if d(i) > i]
+    return [i for i in range(1,upto+1) if d(i) > i]
 
 abundant_numbers_list = abundant_numbers(ceiling)
 abundant_sums = {x + y for x in abundant_numbers_list for y in abundant_numbers_list}
