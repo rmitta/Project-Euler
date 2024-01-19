@@ -73,6 +73,3 @@ for j in range(1,n+1):
 print(d)
 
 #It turns out the first pair we find also has the smallest difference... 
-    
-    
-    
