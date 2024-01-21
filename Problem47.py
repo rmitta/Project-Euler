@@ -7,12 +7,24 @@ from Utils.Primes import Primes
 
 
 
-def primeFactorisation(n, primesObject):
+def primeFactorisation(n : int, primesObject : Primes):
+    """Calculate the prime factorisation of a number n, assuming primesObject contains a list of primes up to sqrt(n)
+
+    Args:
+        n (int): The number to factorise
+        primesObject (Primes): A Primes object containing at least primes up to sqrt(n)
+
+    Raises:
+        Exception: If we do not have access to primes up to sqrt(n)
+
+    Returns:
+        factors (list[int]): The list of prime factors of n, in order, with duplicates
+    """
     sqrtn = math.isqrt(n)
     if primesObject.checked < sqrtn:
         raise Exception(f"Must have checked primes upto sqrt {n}, i.e. {sqrtn}")
     
-    factors = []
+    factors : list[int] = []
     primeIndex = 0
     while n > 1:
         p = primesObject.list[primeIndex]
@@ -24,14 +36,6 @@ def primeFactorisation(n, primesObject):
             factors.append(p)
             n = n // p
         primeIndex += 1
-        
-        
-        if primeIndex >= len(primesObject.list):
-            print(f"n is: {n}")
-            print(primeIndex)
-            print(factors)
-            print(primesObject.checked)
-            print(sqrtn)
         
     return factors
 

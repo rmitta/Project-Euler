@@ -46,3 +46,35 @@ class Primes():
         
         self.list = list(np.nonzero(potentialPrimes)[0])
         self.checked = n
+
+def primeFactorisation(n : int, primesObject : Primes):
+    """Calculate the prime factorisation of a number n, assuming primesObject contains a list of primes up to sqrt(n)
+
+    Args:
+        n (int): The number to factorise
+        primesObject (Primes): A Primes object containing at least primes up to sqrt(n)
+
+    Raises:
+        Exception: If we do not have access to primes up to sqrt(n)
+
+    Returns:
+        factors (list[int]): The list of prime factors of n, in order, with duplicates
+    """
+    sqrtn = math.isqrt(n)
+    if primesObject.checked < sqrtn:
+        raise Exception(f"Must have checked primes upto sqrt {n}, i.e. {sqrtn}")
+    
+    factors : list[int] = []
+    primeIndex = 0
+    while n > 1:
+        p = primesObject.list[primeIndex]
+        if p > sqrtn: #Then the remaining n must be prime
+            factors.append(n)
+            n = 1
+        
+        while n % p == 0:
+            factors.append(p)
+            n //= p
+        primeIndex += 1
+        
+    return factors
